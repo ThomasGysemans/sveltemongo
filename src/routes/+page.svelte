@@ -32,8 +32,8 @@
       <form method="POST" use:enhance={handleSubmit}>
         <input type="email" name="email" placeholder="Email" required />
         <input type="password" name="password" placeholder="Password" required />
-        <button formaction="?/login" disabled={loading}>{loading ? "Chargement..." : "Log in"}</button>
-        <button formaction="?/register" disabled={loading}>{loading ? "Chargement..." : "Register"}</button>
+        <button formaction="?/login" disabled={loading}>{loading ? "Loading..." : "Log in"}</button>
+        <button formaction="?/register" disabled={loading}>{loading ? "Loading..." : "Register"}</button>
       </form>
     {:else}
       <p>Go look at the <a href="/projects">projects</a></p>

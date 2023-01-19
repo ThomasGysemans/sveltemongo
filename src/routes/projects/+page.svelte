@@ -36,4 +36,4 @@
   {/if}
 </div>
 
-<button on:click={logOut} disabled={loading}>{loading ? "Chargement..." : "Log out"}</button>
+<button on:click={logOut} disabled={loading}>{loading ? "Loading..." : "Log out"}</button>
