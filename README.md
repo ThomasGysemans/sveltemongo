@@ -2,6 +2,20 @@
 
 SvelteKit App using MongoDB as backend with custom authentication.
 
+## Get started
+
+Create a `.env` file at the root of your application and add the following variable :
+
+```
+MONGODB_URI=mongodb+srv://...
+```
+
+Use your own connection URI available in your personal space within MongoDB.
+
+## Deploy your app
+
+Make sure the secret variables are stored in `.env` files and that those files are registered in `.gitignore`. Push on GitHub and then deploy on [Vercel](https://vercel.com/dashboard) and set your environment variables there using their GUI.
+
 ## Technologies
 
 This template is using the following dependencies that often come in handy :
@@ -29,6 +43,7 @@ Assuming you're only using the free version of FontAwesome, everything you need 
 
 ```html
 <script>
+  import Fa from 'svelte-fa';
   import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 </script>
 
