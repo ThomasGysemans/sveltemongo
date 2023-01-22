@@ -17,17 +17,18 @@
       }
     });
 
+    loading = false;
+
     if (response.status === 200) {
       goto("/");
     }
-
-    loading = false;
   }
 </script>
 
 <div>
   <h1>Hello</h1>
   <p>Connected with email {user.email}</p>
+  <p><a href="/profile">See your profile</a></p>
   <hr />
   {#if projects != null}
     {#each projects as project}

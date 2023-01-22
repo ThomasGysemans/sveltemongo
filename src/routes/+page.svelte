@@ -1,17 +1,16 @@
 <script lang="ts">
-	import type { ActionResult } from '@sveltejs/kit';
 	import type { ActionData } from './$types';
-  import { enhance } from '$app/forms';
+  import { enhance, type SubmitFunction } from '$app/forms';
 
   let isConnected: boolean = false;
   let loading = false;
 
   export let form: ActionData;
 
-  function handleSubmit() {
+  const handleSubmit: SubmitFunction = () => {
     loading = true;
 
-    return async ({result, update}: {result: ActionResult, update:()=>Promise<void>}) => {
+    return async ({result, update}) => {
       await update();
       if (result.type === "success") {
         isConnected = true; 

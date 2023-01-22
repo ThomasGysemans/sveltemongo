@@ -1,4 +1,5 @@
 import type { Actions } from './$types';
+import { DATABASE_NAME } from '$env/static/private';
 import { fail } from '@sveltejs/kit';
 import { encryptUserId, hashPassword, validatePassword } from '$db/security';
 import clientPromise from "$db/mongo";
@@ -11,7 +12,7 @@ export const actions: Actions = {
       const email = data.get('email') as string;
       const password = data.get('password') as string;
       const client = await clientPromise;
-      const db = client.db("myFirstDatabase");
+      const db = client.db(DATABASE_NAME);
       const user = await db
         .collection<User>("users")
         .findOne({ email });
@@ -39,7 +40,7 @@ export const actions: Actions = {
       const email = data.get('email') as string;
       const password = data.get('password') as string;
       const client = await clientPromise;
-      const db = client.db("myFirstDatabase");
+      const db = client.db(DATABASE_NAME);
       const user = await db
         .collection<User>("users")
         .findOne({ email })
@@ -52,7 +53,7 @@ export const actions: Actions = {
         .collection<User>("users")
         .insertOne({ email, password: hashPassword(password) });
       // ! A `secure` cookie will not be available on the client side, but still visible in the console.
-      cookies.set("userId", encryptUserId(newUser.insertedId.toString(), ip.address()), { path: "/", sameSite: true, secure: true });
+      cookies.set("userId", encryptUserId(newUser.insertedId.toString(), ip.address()), { path: "/", sameSite: true, httpOnly: true, secure: true });
     } catch (e) {
       return fail(400, {
         error: "Cannot sign in"
