@@ -1,9 +1,9 @@
 import type { Cookies } from "@sveltejs/kit";
 import type { Db, WithId } from "mongodb";
+import { ObjectId } from "mongodb";
 import { DATABASE_NAME } from "$env/static/private";
 import { decipherUserId } from "$db/security";
 import { error } from "@sveltejs/kit";
-import { ObjectID } from "bson";
 import clientPromise from "$db/mongo";
 import logOutUser from "./logOutUser";
 import ip from "ip";
@@ -36,14 +36,14 @@ export default async function getUser(cookies: Cookies, database?: Db): Promise<
     // If the user IP address is not the same as when he first logged in, he must be disconnected.
     // As a consequence, it is probable that the result will not be valid data to pass in ObjectID, hence the `try catch`.
     // It is very unlikely that the deciphered userId happens to be the exact ID of another user, so it's neglected.
-    objectId = new ObjectID(decipheredUserId);
+    objectId = new ObjectId(decipheredUserId);
   } catch (e) {
     logOutUser(cookies);
     throw error(400, "Invalid session.");
   }
   const user = await db
     .collection<User>("users")
-    .findOne({ _id: new ObjectID(decipheredUserId) });
+    .findOne({ _id: objectId });
   // This verification needs to be added every time we fetch the user's data
   // because it could be removed from the database in between.
   // This happens when the user deletes his account on another session for example.
