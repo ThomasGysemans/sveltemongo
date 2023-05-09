@@ -22,6 +22,8 @@
         if (file) {
           pictureURL = URL.createObjectURL(file);
         }
+      } else {
+        console.error(result);
       }
       loading = false;
     };
@@ -40,7 +42,8 @@
     });
 
     if (res.ok) {
-      return imageChunksToURL(await res.json());
+      const { data, type } = await res.json();
+      return imageChunksToURL(data, type);
     } else {
       throw new Error(await res.text());
     }
@@ -59,8 +62,8 @@
         <span>Loading...</span>
       {:then res}
         <img src={res} alt="avatar" />
-      {:catch}
-        <span>Error</span>
+      {:catch err}
+        <span>{err}</span>
       {/await}
     {:else}
       <span>No picture</span>
@@ -71,8 +74,8 @@
 <form method="POST" action="/profile?/upload" use:enhance={handleSubmit}>
   <fieldset>
     <legend>Upload your profile picture</legend>
-    <input name="picture" type="file" accept="image/png, image/jpeg" />
-    <button disabled={loading}>{loading ? "Loading..." : "Submit"}</button>
+    <input name="picture" type="file" accept="image/png, image/jpeg, image/webp" />
+    <button type="submit" disabled={loading}>{loading ? "Loading..." : "Submit"}</button>
   </fieldset>
 </form>
 

@@ -21,7 +21,7 @@ export const actions: Actions = {
     // Below are arbitrary values used for the example.
     // It is highly recommended to set those as global variables,
     // and to widen the possibilites.
-    const availableTypes = ["image/png", "image/jpeg"];
+    const availableTypes = ["image/png", "image/jpeg", "image/webp"];
     const maxSize = 1e6; // 1MB max size here. You are technically not limited to 1MB.
     if (!availableTypes.includes(picture.type)) {
       return fail(400, {
@@ -35,7 +35,7 @@ export const actions: Actions = {
     }
     try {
       const { user, decipheredUserId, db } = await getUser(cookies);
-      const options = { metadata: { uploadedBy: decipheredUserId }};
+      const options = { metadata: { uploadedBy: decipheredUserId, type: picture.type }};
       let pictureId;
       try {
         // Does the user already have a picture?
@@ -55,7 +55,6 @@ export const actions: Actions = {
         .collection("users")
         .updateOne({ email: user.email }, { $set: { picture: pictureId } });
     } catch (e) {
-      console.error(e);
       return fail(400, {
         error: "Could not save the picture to the database."
       });

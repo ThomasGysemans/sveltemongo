@@ -1,4 +1,4 @@
-import type { Binary, MongoClient, Document } from 'mongodb';
+import type { Binary, MongoClient } from 'mongodb';
 
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
@@ -30,8 +30,9 @@ declare global {
 	}
 
 	// Metadata for uploading files + a custom one I recommend
-	interface UploadMetadata extends Document {
-		uploadedBy?: string;
+	interface UploadMetadata {
+		uploadedBy: string;
+		type: string;
 	}
 
 	// Options for uploading files with the helper function
