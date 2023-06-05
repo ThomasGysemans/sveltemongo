@@ -37,13 +37,13 @@ export async function uploadFile(filename: string, data: Blob, db: Db, options?:
  * @param bucketName The name of the bucket.
  * @returns The list of chunks as buffers.
  */
-export async function downloadFile(fileId: ObjectId | string, db: Db, bucketName?: string): Promise<Buffer[]> {
+export async function downloadFile(fileId: ObjectId | string, db: Db, bucketName?: string): Promise<Chunk[]> {
   return new Promise((resolve, reject) => {
     const gfs = new GridFSBucket(db, { bucketName: bucketName ?? "fs" });
     // To get a file according to its name instead of its ID,
     // use the method : `openDownloadStreamByName`.
     const stream = gfs.openDownloadStream(typeof fileId === "string" ? new ObjectId(fileId) : fileId);
-    const chunks: Buffer[] = [];
+    const chunks: Chunk[] = [];
     stream.start();
     stream.on("data", (chunk) => chunks.push(chunk));
     stream.on("end", () => resolve(chunks));
