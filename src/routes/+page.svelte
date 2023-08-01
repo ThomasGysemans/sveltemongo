@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { ActionData } from './$types';
-  import { enhance, type SubmitFunction } from '$app/forms';
+	import type { ActionData, SubmitFunction } from './$types';
+  import { enhance } from '$app/forms';
 
   let isConnected: boolean = false;
   let loading = false;

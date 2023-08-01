@@ -20,7 +20,7 @@ export const POST = (async ({request}) => {
   if (fileId == undefined) {
     return new Response("Missing file ID.", { status: 400 });
   }
-  let image: Buffer[] | undefined;
+  let image: Chunk[] | undefined;
   let type: string;
   try {
     const imageDocument = (await findUploadedFile({ _id: new ObjectId(fileId) }, db, undefined, bucketName))[0];

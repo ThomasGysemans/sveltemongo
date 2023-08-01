@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
-	import { enhance, type SubmitFunction } from "$app/forms";
+  import type { PageData, SubmitFunction } from "./$types";
+	import { enhance } from "$app/forms";
 	import imageChunksToURL from "$lib/imageChunksToURL";
   
   export let data: PageData; // the data returned by the `load` function of `./+page.server.ts`
